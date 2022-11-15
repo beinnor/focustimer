@@ -1,2 +1,43 @@
+@import '~tiny-ui/dist/styles/index.css';
+
+body,
+#root {
+  min-height: 100vh;
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #222233;
+}
+
 .App {
+  color: #cfa7f6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.timeString {
+  font-size: 10rem;
+  text-align: center;
+}
+
+.titleString {
+  font-size: 8rem;
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-around;
+}
+
+.topBar .border {
+  border: 1px solid #cfa7f6;
 }

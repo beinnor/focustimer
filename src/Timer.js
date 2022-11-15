@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Button from 'tiny-ui/lib/button';
 import { secsInMmssString } from './Helper';
 
 const Timer = ({ seconds, nextSession }) => {
@@ -48,13 +49,34 @@ const Timer = ({ seconds, nextSession }) => {
     return () => clearInterval(timer);
   }, [timer]);
 
+  const startResetBtnJSX = () => {
+    return (
+      <>
+        <Button btnType="primary" onClick={startHandler}>
+          Start
+        </Button>
+        <Button btnType="danger" onClick={resetHandler}>
+          Reset
+        </Button>
+      </>
+    );
+  };
+
+  const stopBtnJSX = () => {
+    return (
+      <Button btnType="danger" onClick={stopHandler}>
+        Stop
+      </Button>
+    );
+  };
+
   return (
-    <div className="Timer">
-      <button onClick={startHandler}>Start</button>
-      <button onClick={stopHandler}>Stop</button>
-      <button onClick={resetHandler}>Reset</button>
-      <div>{secsInMmssString(secondsLeft)}</div>
-    </div>
+    <>
+      <div className="buttons">
+        {!running ? startResetBtnJSX() : stopBtnJSX()}
+      </div>
+      <h1 className="timeString">{secsInMmssString(secondsLeft)}</h1>
+    </>
   );
 };
 
