@@ -25,8 +25,8 @@ const TopBar = ({ type }) => {
     return (
       <div className="topBar">
         <span>Focus</span>
-        <span className="border">Short Break</span>
-        <span>Long Break</span>
+        <span>Short Break</span>
+        <span className="border">Long Break</span>
       </div>
     );
   };

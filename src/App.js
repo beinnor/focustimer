@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import Timer from './Timer';
 import './App.css';
-//import TopBar from './TopBar';
+import TopBar from './TopBar';
 
 const App = () => {
   const sessionTypes = {
-    focus: { name: 'focus', text: 'Focus', minutes: 5 },
+    focus: { name: 'focus', text: 'Focus', minutes: 25 },
     shortBreak: { name: 'shortbreak', text: 'Take a short break', minutes: 5 },
-    longBreak: { name: 'longbreak', text: 'Take a long break', minutes: 5 },
+    longBreak: { name: 'longbreak', text: 'Take a long break', minutes: 15 },
   };
 
   const [shortBreaksCount, setShortBreaksCount] = useState(0);
@@ -37,8 +37,12 @@ const App = () => {
 
   return (
     <div className="App">
+      <TopBar type={currentSessionType.name} />
       <h2 className="titleString">{currentSessionType.text}</h2>
-      <Timer seconds={currentSessionType.minutes} nextSession={nextSession} />
+      <Timer
+        seconds={currentSessionType.minutes * 60}
+        nextSession={nextSession}
+      />
     </div>
   );
 };
