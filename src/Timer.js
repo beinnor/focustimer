@@ -4,61 +4,67 @@ import { secsInMmssString } from './Helper';
 
 const Timer = ({ seconds, nextSession }) => {
   const [secondsLeft, setSecondsLeft] = useState(seconds);
-  const [running, setRunning] = useState(false);
-  const [timer, setTimer] = useState(null);
+  const [paused, setPaused] = useState(true);
+  const [restart, setRestart] = useState(false);
+
+  useEffect(() => {
+    if (restart) {
+      reset();
+    }
+  }, [restart]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      tick();
+    }, 1000);
+    return () => clearInterval(intervalId);
+  });
+
+  const tick = () => {
+    if (paused) return;
+    if (secondsLeft === 0) {
+      finished();
+    } else {
+      setSecondsLeft((secondsLeft) => secondsLeft - 1);
+    }
+  };
+
+  const reset = () => {
+    setSecondsLeft(seconds);
+    setPaused(true);
+    setRestart(false);
+  };
+
+  const finished = () => {
+    setRestart(true);
+    nextSession();
+  };
 
   const startHandler = () => {
-    setRunning(true);
+    setPaused(false);
   };
 
   const stopHandler = () => {
-    setRunning(false);
+    setPaused(true);
   };
 
   const resetHandler = () => {
-    setRunning(false);
-    setSecondsLeft(seconds);
-    setTimer(null);
+    reset();
   };
 
-  useEffect(() => {
-    setSecondsLeft(seconds);
-  }, [seconds]);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (running) {
-        setSecondsLeft((secondsLeft) => secondsLeft - 1);
-        if (secondsLeft === 0) {
-          clearInterval(timer);
-        }
-      }
-    }, 1000);
-    setTimer(timer);
-  }, [running]);
-
-  useEffect(() => {
-    if (secondsLeft === 0) {
-      setRunning(false);
-      nextSession();
-      clearInterval(timer);
-    }
-  }, [secondsLeft, timer]);
-
-  useEffect(() => {
-    return () => clearInterval(timer);
-  }, [timer]);
-
-  const startResetBtnJSX = () => {
+  const startBtnJSX = () => {
     return (
-      <>
-        <Button btnType="primary" onClick={startHandler}>
-          Start
-        </Button>
-        <Button btnType="danger" onClick={resetHandler}>
-          Reset
-        </Button>
-      </>
+      <Button btnType="primary" onClick={startHandler}>
+        Start
+      </Button>
+    );
+  };
+
+  const resetBtnJSX = () => {
+    return (
+      <Button btnType="danger" onClick={resetHandler}>
+        Reset
+      </Button>
     );
   };
 
@@ -73,7 +79,8 @@ const Timer = ({ seconds, nextSession }) => {
   return (
     <>
       <div className="buttons">
-        {!running ? startResetBtnJSX() : stopBtnJSX()}
+        {paused ? startBtnJSX() : stopBtnJSX()}
+        {paused && secondsLeft !== seconds ? resetBtnJSX() : ''}
       </div>
       <h1 className="timeString">{secsInMmssString(secondsLeft)}</h1>
     </>
