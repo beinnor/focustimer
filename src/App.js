@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Timer from './Timer';
 import './App.css';
 import TopBar from './TopBar';
+import Settings from './Settings';
 
 const App = () => {
   const sessionTypes = {
@@ -14,6 +15,7 @@ const App = () => {
   const [currentSessionType, setCurrentSessionType] = useState(
     sessionTypes.focus
   );
+  const [showSettings, setShowSettings] = useState(false);
 
   const selectSessionType = () => {
     if (currentSessionType.name === 'focus') {
@@ -31,20 +33,28 @@ const App = () => {
     }
   };
 
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+  };
+
   const nextSession = () => {
     selectSessionType();
   };
-
-  return (
-    <div className="App">
-      <TopBar type={currentSessionType.name} />
-      <h2 className="titleString">{currentSessionType.text}</h2>
-      <Timer
-        seconds={currentSessionType.minutes * 60}
-        nextSession={nextSession}
-      />
-    </div>
-  );
+  if (showSettings) {
+    return <Settings toggleSettings={toggleSettings} />;
+  } else {
+    return (
+      <div className="App">
+        <TopBar type={currentSessionType.name} />
+        <h2 className="titleString">{currentSessionType.text}</h2>
+        <Timer
+          seconds={currentSessionType.minutes * 60}
+          nextSession={nextSession}
+        />
+        <button onClick={toggleSettings}>&#9881;</button>
+      </div>
+    );
+  }
 };
 
 export default App;
