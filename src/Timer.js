@@ -40,21 +40,9 @@ const Timer = ({ seconds, nextSession }) => {
     nextSession();
   };
 
-  const startHandler = () => {
-    setPaused(false);
-  };
-
-  const stopHandler = () => {
-    setPaused(true);
-  };
-
-  const resetHandler = () => {
-    reset();
-  };
-
   const startBtnJSX = () => {
     return (
-      <Button btnType="primary" onClick={startHandler}>
+      <Button btnType="primary" onClick={() => setPaused(false)}>
         Start
       </Button>
     );
@@ -62,7 +50,7 @@ const Timer = ({ seconds, nextSession }) => {
 
   const resetBtnJSX = () => {
     return (
-      <Button btnType="danger" onClick={resetHandler}>
+      <Button btnType="danger" onClick={reset}>
         Reset
       </Button>
     );
@@ -70,7 +58,7 @@ const Timer = ({ seconds, nextSession }) => {
 
   const stopBtnJSX = () => {
     return (
-      <Button btnType="danger" onClick={stopHandler}>
+      <Button btnType="danger" onClick={() => setPaused(true)}>
         Stop
       </Button>
     );
