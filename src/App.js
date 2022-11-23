@@ -5,7 +5,7 @@ import TopBar from './TopBar';
 import Settings from './Settings';
 
 const App = () => {
-  const sessionTypes = {
+  let sessionTypes = {
     focus: { name: 'focus', text: 'Focus', minutes: 25 },
     shortBreak: { name: 'shortbreak', text: 'Take a short break', minutes: 5 },
     longBreak: { name: 'longbreak', text: 'Take a long break', minutes: 15 },
@@ -37,11 +37,40 @@ const App = () => {
     setShowSettings(!showSettings);
   };
 
+  const updateSettings = (focusTime, shortBreakTime, longBreakTime) => {
+    console.log(
+      `updating settings: ${focusTime} ${shortBreakTime} ${longBreakTime}`
+    );
+
+    sessionTypes = {
+      focus: { name: 'focus', text: 'Focus', minutes: focusTime },
+      shortBreak: {
+        name: 'shortbreak',
+        text: 'Take a short break',
+        minutes: shortBreakTime,
+      },
+      longBreak: {
+        name: 'longbreak',
+        text: 'Take a long break',
+        minutes: longBreakTime,
+      },
+    };
+
+    let tmp = currentSessionType.name;
+    setCurrentSessionType(sessionTypes[tmp]);
+  };
+
   const nextSession = () => {
     selectSessionType();
   };
   if (showSettings) {
-    return <Settings toggleSettings={toggleSettings} />;
+    return (
+      <Settings
+        toggleSettings={toggleSettings}
+        sessionTypes={sessionTypes}
+        updateSettings={updateSettings}
+      />
+    );
   } else {
     return (
       <div className="App">
