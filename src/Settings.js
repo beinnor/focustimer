@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import defaultSettings from './defaultSettings';
 
 const Settings = ({ toggleSettings, sessionTypes, updateSettings }) => {
   const [focusTime, setFocusTime] = useState(sessionTypes.focus.minutes);
@@ -10,49 +11,45 @@ const Settings = ({ toggleSettings, sessionTypes, updateSettings }) => {
   );
 
   const reset = () => {
-    setFocusTime(sessionTypes.focus.minutes);
-    setShortBreakTime(sessionTypes.shortBreak.minutes);
-    setLongBreakTime(sessionTypes.longBreak.minutes);
-  };
-
-  const saveSettings = () => {
-    updateSettings(focusTime, shortBreakTime, longBreakTime);
-    toggleSettings();
+    setFocusTime(defaultSettings.focus.minutes);
+    setShortBreakTime(defaultSettings.shortBreak.minutes);
+    setLongBreakTime(defaultSettings.longBreak.minutes);
   };
 
   return (
-    <div>
+    <div className="settingsPage">
       <h1>Settings</h1>
       <div>
-        Focus time:{' '}
+        <h2>Focus time:</h2>
         <div>
-          <button onClick={() => setFocusTime((focusTime) => focusTime - 1)}>
+          <button
+            onClick={() => {
+              if (focusTime > 1) {
+                setFocusTime((focusTime) => focusTime - 1);
+              }
+            }}
+          >
             -
           </button>
-          {focusTime}
+          <h2>{focusTime}</h2>
           <button onClick={() => setFocusTime((focusTime) => focusTime + 1)}>
             +
           </button>
         </div>
       </div>
       <div>
-        <button
-          onClick={() =>
-            setShortBreakTime((shortBreakTime) => shortBreakTime - 1)
-          }
-        >
-          -
-        </button>
-        Short break time:{' '}
+        <h2>Short break time:</h2>
         <div>
           <button
-            onClick={() =>
-              setShortBreakTime((shortBreakTime) => shortBreakTime - 1)
-            }
+            onClick={() => {
+              if (shortBreakTime > 1) {
+                setShortBreakTime((shortBreakTime) => shortBreakTime - 1);
+              }
+            }}
           >
             -
           </button>
-          {shortBreakTime}{' '}
+          <h2>{shortBreakTime}</h2>
           <button
             onClick={() =>
               setShortBreakTime((shortBreakTime) => shortBreakTime + 1)
@@ -63,16 +60,18 @@ const Settings = ({ toggleSettings, sessionTypes, updateSettings }) => {
         </div>
       </div>
       <div>
-        Long break time:{' '}
+        <h2>Long break time:</h2>
         <div>
           <button
-            onClick={() =>
-              setLongBreakTime((longBreakTime) => longBreakTime - 1)
-            }
+            onClick={() => {
+              if (longBreakTime > 1) {
+                setLongBreakTime((longBreakTime) => longBreakTime - 1);
+              }
+            }}
           >
             -
           </button>
-          {longBreakTime}
+          <h2>{longBreakTime}</h2>
           <button
             onClick={() =>
               setLongBreakTime((longBreakTime) => longBreakTime + 1)
@@ -83,7 +82,12 @@ const Settings = ({ toggleSettings, sessionTypes, updateSettings }) => {
         </div>
       </div>
       <button onClick={reset}>Defaults</button>
-      <button onClick={saveSettings}>Close Settings</button>
+      <button
+        onClick={() => updateSettings(focusTime, shortBreakTime, longBreakTime)}
+      >
+        Save Settings
+      </button>
+      <button onClick={() => toggleSettings()}>Close Settings</button>
     </div>
   );
 };

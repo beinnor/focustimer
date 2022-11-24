@@ -3,14 +3,10 @@ import Timer from './Timer';
 import './App.css';
 import TopBar from './TopBar';
 import Settings from './Settings';
+import defaultSettings from './defaultSettings';
 
 const App = () => {
-  let sessionTypes = {
-    focus: { name: 'focus', text: 'Focus', minutes: 25 },
-    shortBreak: { name: 'shortbreak', text: 'Take a short break', minutes: 5 },
-    longBreak: { name: 'longbreak', text: 'Take a long break', minutes: 15 },
-  };
-
+  const [sessionTypes, setSessionTypes] = useState(defaultSettings);
   const [shortBreaksCount, setShortBreaksCount] = useState(0);
   const [currentSessionType, setCurrentSessionType] = useState(
     sessionTypes.focus
@@ -38,11 +34,7 @@ const App = () => {
   };
 
   const updateSettings = (focusTime, shortBreakTime, longBreakTime) => {
-    console.log(
-      `updating settings: ${focusTime} ${shortBreakTime} ${longBreakTime}`
-    );
-
-    sessionTypes = {
+    let tmp = {
       focus: { name: 'focus', text: 'Focus', minutes: focusTime },
       shortBreak: {
         name: 'shortbreak',
@@ -56,8 +48,8 @@ const App = () => {
       },
     };
 
-    let tmp = currentSessionType.name;
-    setCurrentSessionType(sessionTypes[tmp]);
+    setSessionTypes(tmp);
+    setCurrentSessionType(tmp[currentSessionType.name]);
   };
 
   const nextSession = () => {
