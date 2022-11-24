@@ -10,7 +10,8 @@ body,
   background-color: #222233;
 }
 
-.App {
+.App,
+.settingsPage {
   color: #cfa7f6;
   min-height: 100vh;
   display: flex;

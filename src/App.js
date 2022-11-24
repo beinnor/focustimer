@@ -2,18 +2,16 @@ import React, { useState } from 'react';
 import Timer from './Timer';
 import './App.css';
 import TopBar from './TopBar';
+import Settings from './Settings';
+import defaultSettings from './defaultSettings';
 
 const App = () => {
-  const sessionTypes = {
-    focus: { name: 'focus', text: 'Focus', minutes: 25 },
-    shortBreak: { name: 'shortbreak', text: 'Take a short break', minutes: 5 },
-    longBreak: { name: 'longbreak', text: 'Take a long break', minutes: 15 },
-  };
-
+  const [sessionTypes, setSessionTypes] = useState(defaultSettings);
   const [shortBreaksCount, setShortBreaksCount] = useState(0);
   const [currentSessionType, setCurrentSessionType] = useState(
     sessionTypes.focus
   );
+  const [showSettings, setShowSettings] = useState(false);
 
   const selectSessionType = () => {
     if (currentSessionType.name === 'focus') {
@@ -31,20 +29,53 @@ const App = () => {
     }
   };
 
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+  };
+
+  const updateSettings = (focusTime, shortBreakTime, longBreakTime) => {
+    let tmp = {
+      focus: { name: 'focus', text: 'Focus', minutes: focusTime },
+      shortBreak: {
+        name: 'shortbreak',
+        text: 'Take a short break',
+        minutes: shortBreakTime,
+      },
+      longBreak: {
+        name: 'longbreak',
+        text: 'Take a long break',
+        minutes: longBreakTime,
+      },
+    };
+
+    setSessionTypes(tmp);
+    setCurrentSessionType(tmp[currentSessionType.name]);
+  };
+
   const nextSession = () => {
     selectSessionType();
   };
-
-  return (
-    <div className="App">
-      <TopBar type={currentSessionType.name} />
-      <h2 className="titleString">{currentSessionType.text}</h2>
-      <Timer
-        seconds={currentSessionType.minutes * 60}
-        nextSession={nextSession}
+  if (showSettings) {
+    return (
+      <Settings
+        toggleSettings={toggleSettings}
+        sessionTypes={sessionTypes}
+        updateSettings={updateSettings}
       />
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div className="App">
+        <TopBar type={currentSessionType.name} />
+        <h2 className="titleString">{currentSessionType.text}</h2>
+        <Timer
+          seconds={currentSessionType.minutes * 60}
+          nextSession={nextSession}
+        />
+        <button onClick={toggleSettings}>&#9881;</button>
+      </div>
+    );
+  }
 };
 
 export default App;
