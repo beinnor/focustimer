@@ -1,4 +1,13 @@
 import React, { useState } from 'react';
+import {
+  Container,
+  Button,
+  Typography,
+  Paper,
+  Box,
+  Divider,
+} from '@mui/material';
+
 import defaultSettings from './defaultSettings';
 
 const Settings = ({ toggleSettings, sessionTypes, updateSettings }) => {
@@ -17,78 +26,157 @@ const Settings = ({ toggleSettings, sessionTypes, updateSettings }) => {
   };
 
   return (
-    <div className="settingsPage">
-      <h1>Settings</h1>
-      <div>
-        <h2>Focus time:</h2>
-        <div>
-          <button
-            onClick={() => {
-              if (focusTime > 1) {
-                setFocusTime((focusTime) => focusTime - 1);
-              }
+    <Container maxWidth="sm">
+      <Paper elevation={1}>
+        <Box
+          height="90vh"
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+            marginTop: '20px',
+          }}
+        >
+          <Typography variant="h1" component="h3">
+            Settings
+          </Typography>
+
+          <Divider sx={{ width: '80%', color: '#000000 ' }} />
+
+          <Typography variant="h4">Focus time:</Typography>
+
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              alignItems: 'center',
             }}
           >
-            -
-          </button>
-          <h2>{focusTime}</h2>
-          <button onClick={() => setFocusTime((focusTime) => focusTime + 1)}>
-            +
-          </button>
-        </div>
-      </div>
-      <div>
-        <h2>Short break time:</h2>
-        <div>
-          <button
-            onClick={() => {
-              if (shortBreakTime > 1) {
-                setShortBreakTime((shortBreakTime) => shortBreakTime - 1);
-              }
+            <Button
+              variant="contained"
+              onClick={() => {
+                if (focusTime > 1) {
+                  setFocusTime((focusTime) => focusTime - 1);
+                }
+              }}
+            >
+              -
+            </Button>
+
+            <Typography variant="h4" sx={{ margin: '10px' }}>
+              {focusTime}
+            </Typography>
+
+            <Button
+              variant="contained"
+              onClick={() => setFocusTime((focusTime) => focusTime + 1)}
+            >
+              +
+            </Button>
+          </Box>
+          <Typography variant="h4">Short break time:</Typography>
+
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              alignItems: 'center',
             }}
           >
-            -
-          </button>
-          <h2>{shortBreakTime}</h2>
-          <button
-            onClick={() =>
-              setShortBreakTime((shortBreakTime) => shortBreakTime + 1)
-            }
-          >
-            +
-          </button>
-        </div>
-      </div>
-      <div>
-        <h2>Long break time:</h2>
-        <div>
-          <button
-            onClick={() => {
-              if (longBreakTime > 1) {
-                setLongBreakTime((longBreakTime) => longBreakTime - 1);
+            <Button
+              variant="contained"
+              onClick={() => {
+                if (shortBreakTime > 1) {
+                  setShortBreakTime((shortBreakTime) => shortBreakTime - 1);
+                }
+              }}
+            >
+              -
+            </Button>
+
+            <Typography variant="h4" sx={{ margin: '10px' }}>
+              {shortBreakTime}
+            </Typography>
+
+            <Button
+              variant="contained"
+              onClick={() =>
+                setShortBreakTime((shortBreakTime) => shortBreakTime + 1)
               }
+            >
+              +
+            </Button>
+          </Box>
+
+          <Typography variant="h4">Long break time:</Typography>
+
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              alignItems: 'center',
             }}
           >
-            -
-          </button>
-          <h2>{longBreakTime}</h2>
-          <button
-            onClick={() =>
-              setLongBreakTime((longBreakTime) => longBreakTime + 1)
-            }
+            <Button
+              variant="contained"
+              onClick={() => {
+                if (longBreakTime > 1) {
+                  setLongBreakTime((longBreakTime) => longBreakTime - 1);
+                }
+              }}
+            >
+              -
+            </Button>
+
+            <Typography variant="h4" sx={{ margin: '10px' }}>
+              {longBreakTime}
+            </Typography>
+
+            <Button
+              variant="contained"
+              onClick={() =>
+                setLongBreakTime((longBreakTime) => longBreakTime + 1)
+              }
+            >
+              +
+            </Button>
+          </Box>
+          <Divider sx={{ width: '80%', color: '#000000 ' }} />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+            }}
           >
-            +
-          </button>
-        </div>
-      </div>
-      <button onClick={reset}>Defaults</button>
-      <button
-        onClick={() => updateSettings(focusTime, shortBreakTime, longBreakTime)}
-      >
-        Save Settings
-      </button>
-      <button onClick={() => toggleSettings()}>Close Settings</button>
-    </div>
+            <Button variant="contained" onClick={reset} sx={{ margin: '10px' }}>
+              Defaults
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() =>
+                updateSettings(focusTime, shortBreakTime, longBreakTime)
+              }
+              sx={{ margin: '10px' }}
+            >
+              Save Settings
+            </Button>
+          </Box>
+          <Button
+            variant="contained"
+            onClick={() => toggleSettings()}
+            sx={{ margin: '10px' }}
+          >
+            Close Settings
+          </Button>
+        </Box>
+      </Paper>
+    </Container>
   );
 };
 

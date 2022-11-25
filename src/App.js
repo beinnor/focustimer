@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import Button from '@mui/material/Button';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { Container, Typography, Box } from '@mui/material';
+
 import Timer from './Timer';
-import './App.css';
 import TopBar from './TopBar';
 import Settings from './Settings';
 import defaultSettings from './defaultSettings';
@@ -65,15 +68,34 @@ const App = () => {
     );
   } else {
     return (
-      <div className="App">
-        <TopBar type={currentSessionType.name} />
-        <h2 className="titleString">{currentSessionType.text}</h2>
-        <Timer
-          seconds={currentSessionType.minutes * 60}
-          nextSession={nextSession}
-        />
-        <button onClick={toggleSettings}>&#9881;</button>
-      </div>
+      <Container maxWidth="sm" height="100vh">
+        <Box
+          height="100vh"
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+          }}
+        >
+          <TopBar type={currentSessionType.name} />
+
+          <Typography variant="h3">{currentSessionType.text}</Typography>
+
+          <Timer
+            seconds={currentSessionType.minutes * 60}
+            nextSession={nextSession}
+          />
+
+          <Button
+            variant="outlined"
+            onClick={toggleSettings}
+            startIcon={<SettingsIcon />}
+          >
+            Settings
+          </Button>
+        </Box>
+      </Container>
     );
   }
 };

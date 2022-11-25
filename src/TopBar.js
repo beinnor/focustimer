@@ -1,47 +1,45 @@
 import React from 'react';
+import { Stack, Typography, Box } from '@mui/material';
 
 const TopBar = ({ type }) => {
-  const focus = () => {
-    return (
-      <div className="topBar">
-        <span className="border">Focus</span>
-        <span>Short Break</span>
-        <span>Long Break</span>
-      </div>
-    );
-  };
+  return (
+    <Box>
+      <Stack direction="row" spacing={2}>
+        {type === 'focus' ? (
+          <Typography
+            variant="h6"
+            sx={{ border: 1, borderColor: '#FFFFFF', padding: '2px' }}
+          >
+            Focus
+          </Typography>
+        ) : (
+          <Typography variant="h6">Focus</Typography>
+        )}
 
-  const short = () => {
-    return (
-      <div className="topBar">
-        <span>Focus</span>
-        <span className="border">Short Break</span>
-        <span>Long Break</span>
-      </div>
-    );
-  };
+        {type === 'shortbreak' ? (
+          <Typography
+            variant="h6"
+            sx={{ border: 1, borderColor: '#FFFFFF', padding: '2px' }}
+          >
+            Short Break
+          </Typography>
+        ) : (
+          <Typography variant="h6">Short Break</Typography>
+        )}
 
-  const long = () => {
-    return (
-      <div className="topBar">
-        <span>Focus</span>
-        <span>Short Break</span>
-        <span className="border">Long Break</span>
-      </div>
-    );
-  };
-
-  switch (type) {
-    case 'focus':
-      return focus();
-    case 'shortbreak':
-      return short();
-    case 'longbreak':
-      return long();
-
-    default:
-      return focus();
-  }
+        {type === 'longbreak' ? (
+          <Typography
+            variant="h6"
+            sx={{ border: 1, borderColor: '#FFFFFF', padding: '2px' }}
+          >
+            Long Break
+          </Typography>
+        ) : (
+          <Typography variant="h6">Long Break</Typography>
+        )}
+      </Stack>
+    </Box>
+  );
 };
 
 export default TopBar;
